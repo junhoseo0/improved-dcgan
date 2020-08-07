@@ -1,4 +1,4 @@
-# PyTorch Implementation of *Improved Techniques for Traning Gans*
+# PyTorch Implementation of *Improved Techniques for Traning GANs*
 
 This is the extension of my [PyTorchDCGAN](https://github.com/TomatoPope0/PyTorchDCGAN) repository, adopting techniques and suggested metric from Salimans *et al.* [1]. Escpecially, I'll test my model on
 the following datasets:
