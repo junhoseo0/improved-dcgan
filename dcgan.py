@@ -61,7 +61,7 @@ class Discriminator(nn.Module):
             md.MinibatchDisc(
                 depths * 8 * final_size * final_size,
                 depths * 9 * final_size * final_size, # Heuristic
-                depths * 8 # Also heuristic
+                10 # Also heuristic
             ),
             nn.Linear(depths * 9 * final_size * final_size, 1),
             nn.Sigmoid()
