@@ -71,6 +71,21 @@ Unfortunately, as my vanilla DCGAN implementation did, the generator still colla
 
 Compared to my vanilla DCGAN implementation, images look more connected/filled, though it looks less like the actual numbers.
 
+#### 10 epochs with Minibatch Discrimination
+
+![](./images/g10-mini/g10_image0.bmp)
+![](./images/g10-mini/g10_image1.bmp)
+![](./images/g10-mini/g10_image2.bmp)
+![](./images/g10-mini/g10_image3.bmp)
+![](./images/g10-mini/g10_image4.bmp)
+![](./images/g10-mini/g10_image5.bmp)
+![](./images/g10-mini/g10_image6.bmp)
+![](./images/g10-mini/g10_image7.bmp)
+![](./images/g10-mini/g10_image8.bmp)
+![](./images/g10-mini/g10_image9.bmp)
+
+Much better! For the first time, the model doesn't collapse on long triaining!
+
 ## References
 
 - [1] T. Salimans, I. Goodfellow, W. Zaremba, V. Cheung, A. Radford, and X. Chen, "Improved Techniques for Training GANs," in *NIPS 2016*, D. D. Lee, M. Sugiyama, U. V. Luxburg, I. Guyon, and R. Garnett, 2016, pp. 2234-2242.
