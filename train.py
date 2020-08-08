@@ -22,12 +22,12 @@ G = Generator(args.num_noises, args.colors, args.depths, IMAGE_SIZE)
 D = Discriminator(args.colors, args.depths, IMAGE_SIZE)
 
 criterion = torch.nn.BCELoss()
-optimizer_G = torch.optim.Adam(
+optimizer_g = torch.optim.Adam(
     G.parameters(),
     lr=args.learning_rate,
     betas=[args.beta_1, args.beta_2]
 )
-optimizer_D = torch.optim.Adam(
+optimizer_d = torch.optim.Adam(
     D.parameters(),
     lr=args.learning_rate,
     betas=[args.beta_1, args.beta_2]
@@ -40,7 +40,7 @@ if __name__ == "__main__":
             genuine = data[0] # Drop label data
             genuine = genuine.reshape(-1, args.colors, IMAGE_SIZE, IMAGE_SIZE)
 
-            optimizer_D.zero_grad()
+            optimizer_d.zero_grad()
 
             output = D(genuine)
             loss_d = criterion(output, torch.ones(output.shape))
@@ -54,7 +54,7 @@ if __name__ == "__main__":
             loss_d = criterion(output, torch.zeros(output.shape))
             loss_d.backward()
 
-            optimizer_D.step()
+            optimizer_d.step()
 
             # Train G with fake data
             optimizer_G.zero_grad()
@@ -63,6 +63,6 @@ if __name__ == "__main__":
             loss_g = criterion(output, torch.ones(output.shape))
             loss_g.backward()
 
-            optimizer_D.step()
+            optimizer_g.step()
     
     torch.save(G.state_dict(), "./Models/Gen-%d.pt" % args.epochs)
