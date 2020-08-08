@@ -82,16 +82,16 @@ if __name__ == "__main__":
             optimizer_d.zero_grad()
 
             output = D(genuine)
-            loss_d = criterion(output, pos_labels)
-            loss_d.backward()
+            loss_d_geunine = criterion(output, pos_labels)
+            loss_d_geunine.backward()
 
             # Train D with fake data
             noise = torch.FloatTensor(args.num_noises).uniform_(-1, 1).to(device)
             fake = G(noise)
 
             output = D(fake.detach())
-            loss_d = criterion(output, neg_labels)
-            loss_d.backward()
+            loss_d_fake = criterion(output, neg_labels)
+            loss_d_fake.backward()
 
             optimizer_d.step()
 
@@ -109,6 +109,7 @@ if __name__ == "__main__":
                 print("[%d/%d][%d/%d] D:%.7f G:%.7f" %
                     (epoch, args.epochs, i, len(dataloader), loss_d.item(), loss_g.item()))
 
+            loss_d = loss_d_geunine + loss_d_fake
             losses_d.append(loss_d.item())
             losses_g.append(loss_g.item())
 
