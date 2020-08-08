@@ -76,7 +76,7 @@ if __name__ == "__main__":
             optimizer_d.step()
 
             # Train G with fake data
-            optimizer_G.zero_grad()
+            optimizer_g.zero_grad()
 
             output = D(fake)
             loss_g = criterion(output, torch.ones(output.shape))
