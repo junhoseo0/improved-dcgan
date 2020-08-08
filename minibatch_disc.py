@@ -42,6 +42,6 @@ class MinibatchDisc(nn.Module):
         return torch.cat((flat, o), dim=1)
 
 if __name__ == "__main__":
-    x = torch.randn(64, 2*2*10)
-    y = MinibatchDisc(2*2*10, 5*10, 10)(x)
-    assert y.shape == torch.Size([64, 5*10])
+    x = torch.randn(64, 2*2*1024)
+    y = MinibatchDisc(2*2*1024, 5*1024, 10)(x)
+    assert y.shape == torch.Size([64, 5*1024])
