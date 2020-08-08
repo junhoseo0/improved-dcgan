@@ -11,6 +11,7 @@ parser.add_argument("--batch-size", "-bs", type=int, default=64)
 parser.add_argument("--num-noises", "-n", type=int, default=100)
 parser.add_argument("--depths", "-d", type=int, default=128)
 parser.add_argument("--learning-rate", "-lr", type=float, default=0.0002)
+parser.add_argument("--alpha", "-sl", type=float, default=0.9)
 parser.add_argument("--beta-1", "-b1", type=float, default=0.5)
 parser.add_argument("--beta-2", "-b2", type=float, default=0.99)
 parser.add_argument("--epochs", "-e", type=int, default=10)
@@ -38,13 +39,22 @@ if args.dataset == "mnist":
         data,
         batch_size=args.batch_size,
         shuffle=True,
-        num_workers=args.workers
+        num_workers=args.workers,
+        drop_last=True
     )
 else:
     raise Exception("Not a valid dataset")
 
 G = Generator(args.num_noises, NUM_COLORS, args.depths, IMAGE_SIZE).to(device)
 D = Discriminator(NUM_COLORS, args.depths, IMAGE_SIZE).to(device)
+
+def init_weight(model):
+    classname = model.__class__.__name__
+    if classname.find('conv') != -1:
+        torch.nn.init.normal_(model.weight.data, 0, 0.02)
+
+G.apply(init_weight)
+D.apply(init_weight)
 
 criterion = torch.nn.BCELoss()
 optimizer_g = torch.optim.Adam(
@@ -59,6 +69,9 @@ optimizer_d = torch.optim.Adam(
 )
 
 if __name__ == "__main__":
+    pos_labels = torch.full((args.batch_size, 1), args.alpha, device=device)
+    neg_labels = torch.zeros((args.batch_size, 1), device=device)
+
     for epoch in range(args.epochs):
         losses_d, losses_g = [], []
         for i, data in enumerate(dataloader):
@@ -69,7 +82,7 @@ if __name__ == "__main__":
             optimizer_d.zero_grad()
 
             output = D(genuine)
-            loss_d = criterion(output, torch.ones(output.shape, device=device))
+            loss_d = criterion(output, pos_labels)
             loss_d.backward()
 
             # Train D with fake data
@@ -77,7 +90,7 @@ if __name__ == "__main__":
             fake = G(noise)
 
             output = D(fake.detach())
-            loss_d = criterion(output, torch.zeros(output.shape, device=device))
+            loss_d = criterion(output, neg_labels)
             loss_d.backward()
 
             optimizer_d.step()
@@ -86,7 +99,7 @@ if __name__ == "__main__":
             optimizer_g.zero_grad()
 
             output = D(fake)
-            loss_g = criterion(output, torch.ones(output.shape, device=device))
+            loss_g = criterion(output, pos_labels)
             loss_g.backward()
 
             optimizer_g.step()
