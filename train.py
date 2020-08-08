@@ -17,6 +17,8 @@ parser.add_argument("--beta-2", "-b2", type=float, default=0.99)
 parser.add_argument("--epochs", "-e", type=int, default=10)
 parser.add_argument("--report", "-r", type=int, default=100)
 parser.add_argument("--workers", "-w", type=int, default=4)
+# If feature matching is not used, minibatch discrimination is used instead
+parser.add_arugment("--feature-matching", "-fm", type=bool, default=False)
 args = parser.parse_args()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -57,7 +59,7 @@ G.apply(init_weight)
 D.apply(init_weight)
 
 criterion_d = torch.nn.BCELoss()
-criterion_g = torch.nn.MSELoss()
+criterion_g = torch.nn.MSELoss() if args.feature_matching else torch.nn.BCELoss()
 optimizer_g = torch.optim.Adam(
     G.parameters(),
     lr=args.learning_rate,
@@ -101,10 +103,16 @@ if __name__ == "__main__":
             optimizer_g.zero_grad()
 
             # Feature matching
-            target = D.conv[:-3](genuine)
-            output = D.conv[:-3](fake)
-            loss_g = criterion_g(output, target)
-            loss_g.backward()
+            if args.feature_matching:
+                target = D.conv[:-3](genuine)
+                output = D.conv[:-3](fake)
+                loss_g = criterion_g(output, target)
+                loss_g.backward()
+            # Minibatch discrimination
+            else:
+                output = D(fake)
+                loss_g = criterion_g(output, pos_labels)
+                loss_g.backward()
 
             optimizer_g.step()
 

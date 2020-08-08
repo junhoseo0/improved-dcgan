@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import minibatch_disc as md
 
 # Biases are disabled, as Batch Normalization effectively removes them.
 class Generator(nn.Module):
@@ -57,8 +58,12 @@ class Discriminator(nn.Module):
             nn.LeakyReLU(),
             # Paper is unclear about what does "flattened and then fed
             # into a single sigmoid output" mean; I'll use nn.Linear()
-            nn.Flatten(),
-            nn.Linear(depths * 8 * final_size * final_size, 1),
+            md.MinibatchDisc(
+                depths * 8 * final_size * final_size,
+                depths * 9 * final_size * final_size, # Heuristic
+                depths * 8 # Also heuristic
+            ),
+            nn.Linear(depths * 9 * final_size * final_size, 1),
             nn.Sigmoid()
         )
 
