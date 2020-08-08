@@ -54,7 +54,7 @@ Though I marked minibatch discrimination as implemented, it needs more optimizat
 ![](./images/g10-fm/g10_image8.bmp)
 ![](./images/g10-fm/g10_image9.bmp)
 
-Unfortunately, as vanilla DCGAN [6] did, the generator still collapsed on a small dataset of MNIST [2].
+Unfortunately, as my vanilla DCGAN implementation did, the generator still collapsed on a small dataset of MNIST [2].
 
 #### Single epoch with Minibatch Discrimination
 
@@ -69,7 +69,7 @@ Unfortunately, as vanilla DCGAN [6] did, the generator still collapsed on a smal
 ![](./images/g1-mini/g1_image8.bmp)
 ![](./images/g1-mini/g1_image9.bmp)
 
-Compared to vanilla DCGAN [6], images look more connected/filled, though it looks less like the actual numbers.
+Compared to my vanilla DCGAN implementation, images look more connected/filled, though it looks less like the actual numbers.
 
 ## References
 
