@@ -17,7 +17,7 @@ if args.image_size % 16 != 0:
     raise Exception("Size of the image must be divisible by 16")
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-MODEL_PATH = "./models/g%d.pt" % args.epochs
+MODEL_PATH = "./models/g%d-mini.pt" % args.epochs
 OUTPUT_PATH = "./images/"
 NUM_IMAGES = 10
 
