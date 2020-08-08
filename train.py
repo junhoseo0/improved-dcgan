@@ -18,7 +18,7 @@ parser.add_argument("--report", "-r", type=int, default=100)
 args = parser.parse_args()
 
 if args.dataset == "mnist":
-    IMAGE_SIZE = 64
+    IMAGE_SIZE = 32
     NUM_COLORS = 1
 
     data = torchvision.datasets.MNIST(
