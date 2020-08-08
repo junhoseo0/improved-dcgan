@@ -10,7 +10,8 @@ data = torchvision.datasets.MNIST(
     train=True,
     transform=T.Compose([
         T.Resize(IMAGE_SIZE),
-        T.ToTensor()
+        T.ToTensor(),
+        T.Normalize((0.5), (1))
     ]),
     download=True
 )
