@@ -14,6 +14,16 @@ and compare the output with naive DCGAN [6], both qualitatively and quantitative
 
 As I'm an active learning student, this implementation may not be complete or accurate. Therefore, I recommend you to use other reliable implementations if you're willing to use it in your project.
 
+## To-Do
+
+Though I marked minibatch discrimination as implemented, it needs more optimizations. For example, on the matrix subtraction, it requires a lot of memories.
+
+- [x] Feature Matching
+- [x] Minibatch Discrimination
+- [ ] Historical Averaging
+- [x] One-sided Label Smoothing
+- [ ] Virtual Batch Normalization
+
 ## Model Outputs
 
 ## References
