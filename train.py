@@ -18,7 +18,7 @@ parser.add_argument("--epochs", "-e", type=int, default=10)
 parser.add_argument("--report", "-r", type=int, default=100)
 parser.add_argument("--workers", "-w", type=int, default=4)
 # If feature matching is not used, minibatch discrimination is used instead
-parser.add_arugment("--feature-matching", "-fm", type=bool, default=False)
+parser.add_argument("--feature-matching", "-fm", type=bool, default=False)
 args = parser.parse_args()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
