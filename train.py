@@ -16,8 +16,8 @@ parser.add_argument("--epochs", "-e", type=int, default=10)
 args = parser.parse_args()
 
 if args.dataset == "mnist":
-    IMAGE_SIZE=64
-    NUM_COLORS=1
+    IMAGE_SIZE = 64
+    NUM_COLORS = 1
 
     data = torchvision.datasets.MNIST(
         "../Datasets/MNIST_PyTorch",
@@ -83,5 +83,5 @@ if __name__ == "__main__":
             loss_g.backward()
 
             optimizer_g.step()
-    
+
     torch.save(G.state_dict(), "./Models/Gen-%d.pt" % args.epochs)
