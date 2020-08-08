@@ -43,16 +43,16 @@ Though I marked minibatch discrimination as implemented, it needs more optimizat
 
 #### 10 epochs with Feature Matching
 
-![](./images/g10-fm/g1_image0.bmp)
-![](./images/g10-fm/g1_image1.bmp)
-![](./images/g10-fm/g1_image2.bmp)
-![](./images/g10-fm/g1_image3.bmp)
-![](./images/g10-fm/g1_image4.bmp)
-![](./images/g10-fm/g1_image5.bmp)
-![](./images/g10-fm/g1_image6.bmp)
-![](./images/g10-fm/g1_image7.bmp)
-![](./images/g10-fm/g1_image8.bmp)
-![](./images/g10-fm/g1_image9.bmp)
+![](./images/g10-fm/g10_image0.bmp)
+![](./images/g10-fm/g10_image1.bmp)
+![](./images/g10-fm/g10_image2.bmp)
+![](./images/g10-fm/g10_image3.bmp)
+![](./images/g10-fm/g10_image4.bmp)
+![](./images/g10-fm/g10_image5.bmp)
+![](./images/g10-fm/g10_image6.bmp)
+![](./images/g10-fm/g10_image7.bmp)
+![](./images/g10-fm/g10_image8.bmp)
+![](./images/g10-fm/g10_image9.bmp)
 
 Unfortunately, as vanilla DCGAN [6] did, the generator still collapsed on a small dataset of MNIST [2].
 
