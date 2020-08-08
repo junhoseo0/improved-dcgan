@@ -1,4 +1,5 @@
 import argparse
+import pickle
 import torch
 import torchvision
 import torchvision.transforms as T
@@ -13,6 +14,7 @@ parser.add_argument("--learning-rate", "-lr", type=float, default=0.0002)
 parser.add_argument("--beta-1", "-b1", type=float, default=0.5)
 parser.add_argument("--beta-2", "-b2", type=float, default=0.99)
 parser.add_argument("--epochs", "-e", type=int, default=10)
+parser.add_argument("--report", "-r", type=int, default=100)
 args = parser.parse_args()
 
 if args.dataset == "mnist":
@@ -54,6 +56,7 @@ optimizer_d = torch.optim.Adam(
 
 if __name__ == "__main__":
     for epoch in range(args.epochs):
+        losses_d, losses_g = [], []
         for i, data in enumerate(dataloader):
             # Train D with genuine data
             genuine = data[0] # Drop label data
@@ -84,4 +87,19 @@ if __name__ == "__main__":
 
             optimizer_g.step()
 
-    torch.save(G.state_dict(), "./Models/Gen-%d.pt" % args.epochs)
+            # Report & record loss
+            if i % args.report == args.report-1:
+                print("[%d/%d][%d/%d] D:%.7f G:%.7f" %
+                    (epoch, args.epochs, i, len(dataloader), loss_d.item(), loss_g.item()))
+
+            losses_d.append(loss_d.item())
+            losses_g.append(loss_g.item())
+
+    # Save generator model
+    torch.save(G.state_dict(), "./models/g%d.pt" % args.epochs)
+
+    # Save loss records
+    with open("./metrics/loss_g%d.pkl" % args.epochs, "wb") as g:
+        pickle.dump(losses_g, g)
+    with open("./metrics/loss_d%d.pkl" % args.epochs, "wb") as d:
+        pickle.dump(losses_d, d)
