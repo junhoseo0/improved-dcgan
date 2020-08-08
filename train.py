@@ -56,7 +56,8 @@ def init_weight(model):
 G.apply(init_weight)
 D.apply(init_weight)
 
-criterion = torch.nn.BCELoss()
+criterion_d = torch.nn.BCELoss()
+criterion_g = torch.nn.MSELoss()
 optimizer_g = torch.optim.Adam(
     G.parameters(),
     lr=args.learning_rate,
@@ -69,6 +70,7 @@ optimizer_d = torch.optim.Adam(
 )
 
 if __name__ == "__main__":
+    # One-sided label smoothing
     pos_labels = torch.full((args.batch_size, 1), args.alpha, device=device)
     neg_labels = torch.zeros((args.batch_size, 1), device=device)
 
@@ -82,7 +84,7 @@ if __name__ == "__main__":
             optimizer_d.zero_grad()
 
             output = D(genuine)
-            loss_d_geunine = criterion(output, pos_labels)
+            loss_d_geunine = criterion_d(output, pos_labels)
             loss_d_geunine.backward()
 
             # Train D with fake data
@@ -90,7 +92,7 @@ if __name__ == "__main__":
             fake = G(noise)
 
             output = D(fake.detach())
-            loss_d_fake = criterion(output, neg_labels)
+            loss_d_fake = criterion_d(output, neg_labels)
             loss_d_fake.backward()
 
             optimizer_d.step()
@@ -98,8 +100,10 @@ if __name__ == "__main__":
             # Train G with fake data
             optimizer_g.zero_grad()
 
-            output = D(fake)
-            loss_g = criterion(output, pos_labels)
+            # Feature matching
+            target = D.conv[:-3](genuine)
+            output = D.conv[:-3](fake)
+            loss_g = criterion_g(output, target)
             loss_g.backward()
 
             optimizer_g.step()
