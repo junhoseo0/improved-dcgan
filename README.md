@@ -16,7 +16,7 @@ As I'm an active learning student, this implementation may not be complete or ac
 
 ## To-Do
 
-Though I marked minibatch discrimination as implemented, it needs more optimizations. For example, on the matrix subtraction, it requires a lot of memories.
+Though I marked minibatch discrimination as implemented, it needs more optimizations. For example, in matrix subtraction, it requires a lot of memories.
 
 - [x] Feature Matching
 - [x] Minibatch Discrimination
@@ -25,6 +25,51 @@ Though I marked minibatch discrimination as implemented, it needs more optimizat
 - [ ] Virtual Batch Normalization
 
 ## Model Outputs
+
+### MNIST
+
+#### Single epoch with Feature Matching
+
+![](./images/g1-fm/g1_image0.bmp)
+![](./images/g1-fm/g1_image1.bmp)
+![](./images/g1-fm/g1_image2.bmp)
+![](./images/g1-fm/g1_image3.bmp)
+![](./images/g1-fm/g1_image4.bmp)
+![](./images/g1-fm/g1_image5.bmp)
+![](./images/g1-fm/g1_image6.bmp)
+![](./images/g1-fm/g1_image7.bmp)
+![](./images/g1-fm/g1_image8.bmp)
+![](./images/g1-fm/g1_image9.bmp)
+
+#### 10 epochs with Feature Matching
+
+![](./images/g10-fm/g1_image0.bmp)
+![](./images/g10-fm/g1_image1.bmp)
+![](./images/g10-fm/g1_image2.bmp)
+![](./images/g10-fm/g1_image3.bmp)
+![](./images/g10-fm/g1_image4.bmp)
+![](./images/g10-fm/g1_image5.bmp)
+![](./images/g10-fm/g1_image6.bmp)
+![](./images/g10-fm/g1_image7.bmp)
+![](./images/g10-fm/g1_image8.bmp)
+![](./images/g10-fm/g1_image9.bmp)
+
+Unfortunately, as vanilla DCGAN [6] did, the generator still collapsed on a small dataset of MNIST [2].
+
+#### Single epoch with Minibatch Discrimination
+
+![](./images/g1-mini/g1_image0.bmp)
+![](./images/g1-mini/g1_image1.bmp)
+![](./images/g1-mini/g1_image2.bmp)
+![](./images/g1-mini/g1_image3.bmp)
+![](./images/g1-mini/g1_image4.bmp)
+![](./images/g1-mini/g1_image5.bmp)
+![](./images/g1-mini/g1_image6.bmp)
+![](./images/g1-mini/g1_image7.bmp)
+![](./images/g1-mini/g1_image8.bmp)
+![](./images/g1-mini/g1_image9.bmp)
+
+Compared to vanilla DCGAN [6], images look more connected/filled, though it looks less like the actual numbers.
 
 ## References
 
